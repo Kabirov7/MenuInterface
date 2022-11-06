@@ -16,7 +16,7 @@ namespace Practice1
             this.m_type = type;
         }
 
-        public void run()
+        public void Run()
         {
             while (true)
             {
@@ -27,7 +27,7 @@ namespace Practice1
                 switch (input)
                 {
                     case 1:
-                        InitObject();
+                        CreateObject();
                         break;
                     case 2:
                         ListObjects();
@@ -48,7 +48,7 @@ namespace Practice1
             }
         }
 
-        private Object InitObject()
+        private void CreateObject()
         {
             ConstructorInfo[] constructors = this.m_type.GetConstructors();
             Console.WriteLine("How do you want to init your object?");
@@ -65,8 +65,6 @@ namespace Practice1
             int d = ValidateInput(1, i);
 
             ExecuteFunction(constructors[d - 1]);
-
-            return new Object();
         }
 
         public void ExecuteFunction(MethodBase func)

@@ -20,12 +20,8 @@ namespace Practice1
     {
         static void Main(string[] args)
         {
-            // String[] constructors =
-            // {
-            //     
-            // } 
             var menu = new Menu(typeof(Capibara));
-            menu.run();
+            menu.Run();
 
         }
     }
