@@ -82,7 +82,7 @@ namespace Practice1
             for (int i = 0; i < parameters.Length; i++)
             {
                 Console.WriteLine("Input "+ parameters[i].Name);
-                Object value = inputParam(parameters[i].ParameterType);
+                Object value = InputParam(parameters[i].ParameterType);
                 objects[i] = value;
             }
 
@@ -93,7 +93,7 @@ namespace Practice1
         {
             while (true)
             {
-                int i = (int) inputParam(typeof(int));
+                int i = (int) InputParam(typeof(int));
                 if (i >= start && i <= end)
                 {
                     return i;
@@ -102,7 +102,7 @@ namespace Practice1
             }
         }
 
-        private Object inputParam(Type t)
+        private Object InputParam(Type t)
         {
             Object result;
             while (true)
