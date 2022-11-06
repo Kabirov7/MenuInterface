@@ -18,7 +18,34 @@ namespace Practice1
 
         public void run()
         {
-            InitObject();
+            while (true)
+            {
+                Console.WriteLine("1. Create object.");
+                Console.WriteLine("2. List objects.");
+                Console.WriteLine("3. Use methods of some object.");
+                int input = ValidateInput(1, 3);
+                switch (input)
+                {
+                    case 1:
+                        InitObject();
+                        break;
+                    case 2:
+                        ListObjects();
+                        break;
+                    case 3:
+                        Console.WriteLine("In progress");
+                        break;
+                    
+                }
+            }
+        }
+
+        public void ListObjects()
+        {
+            foreach (var obj in m_objects)
+            {
+                Console.WriteLine(obj);
+            }
         }
 
         private Object InitObject()
@@ -35,14 +62,9 @@ namespace Practice1
             }
 
             Console.WriteLine(" " + (i + 1) + ". " + "Exit");
-            int d = 2;
+            int d = ValidateInput(1, i);
 
             ExecuteFunction(constructors[d - 1]);
-
-            foreach (var obj in m_objects)
-            {
-                Console.WriteLine(obj);
-            }
 
             return new Object();
         }
@@ -67,6 +89,19 @@ namespace Practice1
             }
 
             return objects;
+        }
+
+        private int ValidateInput(int start, int end)
+        {
+            while (true)
+            {
+                int i = (int) inputParam(typeof(int));
+                if (i >= start && i <= end)
+                {
+                    return i;
+                } 
+                Console.WriteLine("You cannot call this command");
+            }
         }
 
         private Object inputParam(Type t)
