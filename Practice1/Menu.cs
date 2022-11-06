@@ -9,6 +9,7 @@ namespace Practice1
     {
         public Type m_type;
         private Object m_instance;
+        private static List<Object> m_objects = new List<Object>();
 
         public Menu(Type type)
         {
@@ -36,24 +37,36 @@ namespace Practice1
             Console.WriteLine(" " + (i + 1) + ". " + "Exit");
             int d = 2;
 
-            InputParameters(constructors[d-1].GetParameters());
-            
+            ExecuteFunction(constructors[d - 1]);
+
+            foreach (var obj in m_objects)
+            {
+                Console.WriteLine(obj);
+            }
+
             return new Object();
         }
 
-        private void InputParameters(ParameterInfo[] parameters)
+        public void ExecuteFunction(MethodBase func)
         {
-            IDictionary<String, Object> values = new Dictionary<String, Object>();
+            object[] values = InputParameters(func.GetParameters());
+            object new_instance = ((ConstructorInfo) func).Invoke(values);
+            m_objects.Add(new_instance);
+        }
+
+        private object[] InputParameters(ParameterInfo[] parameters)
+        {
+            object[] objects = new object[parameters.Length];
             Console.WriteLine(MenuTool.BeautifyFunction(m_type.Name, parameters));
-            foreach (var parameter in parameters)
+
+            for (int i = 0; i < parameters.Length; i++)
             {
-                Console.WriteLine("Input "+ parameter.Name);
-                
-                Object value = inputParam(parameter.ParameterType);
-                values.Add(parameter.Name, value);
+                Console.WriteLine("Input "+ parameters[i].Name);
+                Object value = inputParam(parameters[i].ParameterType);
+                objects[i] = value;
             }
-            
-            Console.WriteLine(values);
+
+            return objects;
         }
 
         private Object inputParam(Type t)
