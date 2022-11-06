@@ -26,8 +26,8 @@ namespace Practice1
         public void Run()
         {
             MockObjects();
-            TestMethods();
-            /*while (true)
+            // TestMethods();
+            while (true)
             {
                 Console.WriteLine("1. Create object.");
                 Console.WriteLine("2. List objects.");
@@ -36,7 +36,7 @@ namespace Practice1
                 switch (input)
                 {
                     case 1:
-                        CreateObject();
+                        UseMethods(true);
                         break;
                     case 2:
                         ListObjects();
@@ -46,7 +46,7 @@ namespace Practice1
                         break;
                     
                 }
-            }*/
+            }
         }
 
         public void ListObjects()
@@ -58,20 +58,33 @@ namespace Practice1
             }
         }
 
-        private void CreateObject()
+        private void UseMethods(bool IsCtor = false)
         {
-            ConstructorInfo[] constructors = this.m_type.GetConstructors();
-            Console.WriteLine("How do you want to init your object?");
-            int i;
-            for (i = 0; i < constructors.Length; i++)
+            MethodBase[] functions = new MethodBase[] { };
+            if (IsCtor)
             {
-                var ctor = constructors[i];
-                Console.WriteLine(" " + (i + 1) + ". " + MenuTool.BeautifyFunction(m_type.Name, ctor.GetParameters()));
+                functions = this.m_type.GetConstructors();
+            }
+            else
+            {
+                functions = this.m_type.GetMethods();
             }
 
-            Console.WriteLine(" " + (i + 1) + ". " + "Exit");
-            int d = ValidateInput(1, i);
-            ExecuteFunction(constructors[d - 1]);
+            ShowFunctions(functions);
+            int max = functions.Length + 1;
+            Console.WriteLine(" " + max + ". " + "Exit");
+
+            int select = ValidateInput(1, max);
+            ExecuteFunction(functions[select - 1], IsCtor);
+        }
+
+        private void ShowFunctions(MethodBase[] functions)
+        {
+            for (int i = 0; i < functions.Length; i++)
+            {
+                var ctor = functions[i];
+                Console.WriteLine(" " + (i + 1) + ". " + MenuTool.BeautifyFunction(m_type.Name, ctor.GetParameters()));
+            }
         }
 
         private int SelectObject()
@@ -88,16 +101,17 @@ namespace Practice1
             int active = 2;
             Console.WriteLine(m_objects[active]);
             Type currentType = m_objects[active].GetType();
-            
-
 
         }
 
-        public void ExecuteFunction(MethodBase func)
+        public void ExecuteFunction(MethodBase func, bool IsCtor=false)
         {
             object[] values = InputParameters(func.GetParameters());
-            object new_instance = ((ConstructorInfo) func).Invoke(values);
-            m_objects.Add(new_instance);
+            if (IsCtor)
+            {
+                object new_instance = ((ConstructorInfo) func).Invoke(values);
+                m_objects.Add(new_instance);
+            }
         }
 
         private object[] InputParameters(ParameterInfo[] parameters)
