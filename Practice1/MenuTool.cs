@@ -7,10 +7,6 @@ namespace Practice1
 {
     public static class MenuTool
     {
-        // public static String[] GetConstructorNames(ConstructorInfo ctor)
-        // {
-        //     return ctor.GetParameters().Select(p => p.ParameterType + " " + p.Name).ToArray();
-        // }
 
         public static String ParametersInRow(ParameterInfo[] parameters)
         {

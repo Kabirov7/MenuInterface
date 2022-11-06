@@ -8,7 +8,6 @@ namespace Practice1
     public class Menu
     {
         public Type m_type;
-        private Object m_instance;
         private static List<Object> m_objects = new List<Object>();
 
         public Menu(Type type)
@@ -16,9 +15,19 @@ namespace Practice1
             this.m_type = type;
         }
 
+        public void MockObjects()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                m_objects.Add(new Capibara(i * 10, "male", "R" + i + "D" + i));
+            }
+        }
+
         public void Run()
         {
-            while (true)
+            MockObjects();
+            TestMethods();
+            /*while (true)
             {
                 Console.WriteLine("1. Create object.");
                 Console.WriteLine("2. List objects.");
@@ -33,18 +42,19 @@ namespace Practice1
                         ListObjects();
                         break;
                     case 3:
-                        Console.WriteLine("In progress");
+                        TestMethods();
                         break;
                     
                 }
-            }
+            }*/
         }
 
         public void ListObjects()
         {
+            int i = 1;
             foreach (var obj in m_objects)
             {
-                Console.WriteLine(obj);
+                Console.WriteLine("#" + i++ + " " + obj);
             }
         }
 
@@ -56,15 +66,31 @@ namespace Practice1
             for (i = 0; i < constructors.Length; i++)
             {
                 var ctor = constructors[i];
-
-
                 Console.WriteLine(" " + (i + 1) + ". " + MenuTool.BeautifyFunction(m_type.Name, ctor.GetParameters()));
             }
 
             Console.WriteLine(" " + (i + 1) + ". " + "Exit");
             int d = ValidateInput(1, i);
-
             ExecuteFunction(constructors[d - 1]);
+        }
+
+        private int SelectObject()
+        {
+            Console.WriteLine("Please, select instance with what you want to work");
+            ListObjects();
+            int selected = ValidateInput(1, m_objects.Count);
+            return selected;
+        }
+
+        private void TestMethods()
+        {
+            // int active = SelectObject();
+            int active = 2;
+            Console.WriteLine(m_objects[active]);
+            Type currentType = m_objects[active].GetType();
+            
+
+
         }
 
         public void ExecuteFunction(MethodBase func)
