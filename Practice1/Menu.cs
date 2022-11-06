@@ -42,7 +42,7 @@ namespace Practice1
                         ListObjects();
                         break;
                     case 3:
-                        TestMethods();
+                        UseMethods(false);
                         break;
                     
                 }
@@ -67,7 +67,7 @@ namespace Practice1
             }
             else
             {
-                functions = this.m_type.GetMethods();
+                functions = TestMethods();
             }
 
             ShowFunctions(functions);
@@ -82,8 +82,8 @@ namespace Practice1
         {
             for (int i = 0; i < functions.Length; i++)
             {
-                var ctor = functions[i];
-                Console.WriteLine(" " + (i + 1) + ". " + MenuTool.BeautifyFunction(m_type.Name, ctor.GetParameters()));
+                var func = functions[i];
+                Console.WriteLine(" " + (i + 1) + ". " + MenuTool.BeautifyFunction(func.Name, func.GetParameters()));
             }
         }
 
@@ -91,33 +91,35 @@ namespace Practice1
         {
             Console.WriteLine("Please, select instance with what you want to work");
             ListObjects();
-            int selected = ValidateInput(1, m_objects.Count);
+            int selected = ValidateInput(1, m_objects.Count)-1;
             return selected;
         }
 
-        private void TestMethods()
+        private MethodBase[] TestMethods()
         {
-            // int active = SelectObject();
-            int active = 2;
+            int active = SelectObject();
             Console.WriteLine(m_objects[active]);
             Type currentType = m_objects[active].GetType();
-
+            return currentType.GetMethods();
         }
 
         public void ExecuteFunction(MethodBase func, bool IsCtor=false)
         {
-            object[] values = InputParameters(func.GetParameters());
+            object[] values = InputParameters(func.Name, func.GetParameters());
             if (IsCtor)
             {
                 object new_instance = ((ConstructorInfo) func).Invoke(values);
                 m_objects.Add(new_instance);
             }
+            else
+            {
+            }
         }
 
-        private object[] InputParameters(ParameterInfo[] parameters)
+        private object[] InputParameters(String name,ParameterInfo[] parameters)
         {
             object[] objects = new object[parameters.Length];
-            Console.WriteLine(MenuTool.BeautifyFunction(m_type.Name, parameters));
+            Console.WriteLine(MenuTool.BeautifyFunction(name, parameters));
 
             for (int i = 0; i < parameters.Length; i++)
             {
