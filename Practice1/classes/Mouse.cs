@@ -6,7 +6,7 @@ namespace Practice1
     {
         public int killedCats;
 
-        public Mouse(int height, int width, string sex, int killedCats) : base(height, width, sex)
+        public Mouse(int height, int weight, string sex, int killedCats) : base(height, weight, sex)
         {
             this.killedCats = killedCats;
         }
@@ -36,13 +36,13 @@ namespace Practice1
         {
             return new Mouse(
                 (a.height + b.height) / 2,
-                (b.width + a.width), "male",
+                (b.weight + a.weight), "male",
                 (a.killedCats + b.killedCats) / 2);
         }
         
         public override string ToString()
         {
-            return "Хомяк: " + sex + ", " + width + ", " + height + ", " + killedCats;
+            return "Хомяк: " + sex + ", " + weight + ", " + height + ", " + killedCats;
         }
     }
 }

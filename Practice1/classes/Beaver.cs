@@ -6,7 +6,7 @@ namespace Practice1
     {
         public int speed;
 
-        public Beaver(int height, int width, string sex, int speed) : base(height, width, sex)
+        public Beaver(int height, int weight, string sex, int speed) : base(height, weight, sex)
         {
             this.speed = speed;
         }
@@ -36,13 +36,13 @@ namespace Practice1
         {
             return new Beaver(
                 (a.height + b.height) / 2,
-                (b.width + a.width), "male",
+                (b.weight + a.weight), "male",
                 (a.speed + b.speed) / 2);
         }
         
         public override string ToString()
         {
-            return "Бобер: " + sex + ", " + width + ", " + height + ", " + speed;
+            return "Бобер: " + sex + ", " + weight + ", " + height + ", " + speed;
         }
     }
 }

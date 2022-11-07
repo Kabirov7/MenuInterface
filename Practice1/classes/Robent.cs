@@ -5,15 +5,15 @@ namespace Practice1
     public abstract class Robent : IRobent
     {
 
-        public int height, width;
+        public int height, weight;
         public String sex;
         
         protected Robent(){}
 
-        protected Robent(int height, int width, string sex)
+        protected Robent(int height, int weight, string sex)
         {
             this.height = height;
-            this.width = width;
+            this.weight = weight;
             this.sex = sex;
         }
 
@@ -37,9 +37,19 @@ namespace Practice1
             Console.WriteLine("Грызун");
         }
 
-        public string Sex { get; set; }
-        public float Weight { get; set; }
-        public int Age { get; set; }
+        public string Sex
+        {
+            get => sex;
+            set { sex = value; }
+        }
+        public int Weight { 
+            get => weight;
+            set { weight = value; }
+        }
+        public int Height { 
+            get => height;
+            set { height = value; }
+        }
         public virtual void Gnaw() {
             Console.WriteLine("Грызун грызет");
         }

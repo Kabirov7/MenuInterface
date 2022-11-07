@@ -6,7 +6,7 @@ namespace Practice1
     {
         public int teethCount;
 
-        public Hamster(int height, int width, string sex, int teethCount) : base(height, width, sex)
+        public Hamster(int height, int weight, string sex, int teethCount) : base(height, weight, sex)
         {
             this.teethCount = teethCount;
         }
@@ -36,13 +36,13 @@ namespace Practice1
         {
             return new Hamster(
                 (a.height + b.height) / 2, 
-                (b.width + a.width), "male", 
+                (b.weight + a.weight), "male", 
                 a.teethCount + b.teethCount);
         }
 
         public override string ToString()
         {
-            return "Хомяк: " + sex + ", " + width + ", " + height + ", " + teethCount;
+            return "Хомяк: " + sex + ", " + weight + ", " + height + ", " + teethCount;
         }
     }
 }
