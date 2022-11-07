@@ -39,11 +39,11 @@ namespace Practice1
 
         public string Sex
         {
-            get => sex;
+            get { return sex; }
             set { sex = value; }
         }
         public int Weight { 
-            get => weight;
+            get { return weight; }
             set { weight = value; }
         }
         public int Height { 

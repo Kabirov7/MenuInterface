@@ -23,6 +23,8 @@ namespace Practice1
             Type[] usingTypes = new[] {typeof(Robent), typeof(Hamster), typeof(Beaver), typeof(Capibara), typeof(Mouse)};
             var menu = new Menu(usingTypes);
             menu.Run();
+            // var c = new Capibara(12, "fd", "fasdf");
+            // Console.WriteLine();
         }
     }
 }

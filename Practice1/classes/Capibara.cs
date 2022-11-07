@@ -8,8 +8,8 @@ namespace Practice1
 
         public static string Species => species;
 
-        public int height, weight, age;
-        public String sex, nickname;
+        public int age;
+        public String nickname;
         private static String[] SEXES = {"девочка", "мальчик"};
 
         private String gender;
