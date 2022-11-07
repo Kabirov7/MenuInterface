@@ -8,6 +8,7 @@ namespace Practice1
     public class Menu
     {
         public Type m_type;
+        private int m_active;
         private static List<Object> m_objects = new List<Object>();
 
         public Menu(Type type)
@@ -63,7 +64,7 @@ namespace Practice1
             MethodBase[] functions = new MethodBase[] { };
             if (IsCtor)
             {
-                functions = this.m_type.GetConstructors();
+                functions = m_type.GetConstructors();
             }
             else
             {
@@ -87,19 +88,18 @@ namespace Practice1
             }
         }
 
-        private int SelectObject()
+        private void SelectObject()
         {
             Console.WriteLine("Please, select instance with what you want to work");
             ListObjects();
-            int selected = ValidateInput(1, m_objects.Count)-1;
-            return selected;
+            m_active = ValidateInput(1, m_objects.Count)-1;
         }
 
         private MethodBase[] TestMethods()
         {
-            int active = SelectObject();
-            Console.WriteLine(m_objects[active]);
-            Type currentType = m_objects[active].GetType();
+            SelectObject();
+            Console.WriteLine(m_objects[m_active]);
+            Type currentType = m_objects[m_active].GetType();
             return currentType.GetMethods();
         }
 
@@ -114,6 +114,7 @@ namespace Practice1
             else
             {
                 // execute function here
+                func.Invoke(m_objects[m_active], values);
             }
         }
 
