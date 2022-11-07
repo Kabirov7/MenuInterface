@@ -20,7 +20,7 @@ namespace Practice1
     {
         static void Main(string[] args)
         {
-            Type[] usingTypes = new[] {typeof(Capibara)};
+            Type[] usingTypes = new[] {typeof(Robent), typeof(Hamster), typeof(Beaver), typeof(Capibara), typeof(Mouse)};
             var menu = new Menu(usingTypes);
             menu.Run();
         }

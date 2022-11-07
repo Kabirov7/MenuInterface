@@ -2,7 +2,7 @@ using System;
 
 namespace Practice1
 {
-    public class Capibara
+    public class Capibara : Robent
     {
         public static String species = "Capibara";
 
@@ -75,6 +75,16 @@ namespace Practice1
             return Species + ": " + nickname + ", " + sex + ", " + age;
         }
 
+        public override void gnaw()
+        {
+            Console.WriteLine("Gnawing");
+        }
+
+        public static String MySpecies()
+        {
+            return "CAPIBARA";
+        }
+        
         public static Capibara operator +(Capibara a, Capibara b)
         {
             return new Capibara(0, SEXES[getRandomSex()], a.nickname + " " + b.nickname);
