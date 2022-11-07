@@ -20,7 +20,8 @@ namespace Practice1
     {
         static void Main(string[] args)
         {
-            var menu = new Menu(typeof(Capibara));
+            Type[] usingTypes = new[] {typeof(Capibara)};
+            var menu = new Menu(usingTypes);
             menu.Run();
 
         }

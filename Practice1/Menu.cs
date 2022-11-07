@@ -7,13 +7,13 @@ namespace Practice1
 {
     public class Menu
     {
-        public Type m_type;
+        public Type[] m_types;
         private int m_active;
         private static List<Object> m_objects = new List<Object>();
 
-        public Menu(Type type)
+        public Menu(Type[] types)
         {
-            this.m_type = type;
+            this.m_types = types;
         }
 
         public void MockObjects()
@@ -24,29 +24,46 @@ namespace Practice1
             }
         }
 
-        public void Run()
+        private void SelectTypes()
         {
-            MockObjects();
-            // TestMethods();
+            Console.WriteLine("Выберите тип для работы:");
+            ShowTypes();
+            int select = SelectOption(m_types) - 1;
+            if (select > m_types.Length - 1) return;
+
+            Console.WriteLine(m_types[select]);
+            Type currentType = m_types[select];
             while (true)
             {
                 Console.WriteLine("1. Создать объект.");
-                Console.WriteLine("2. Отобразить объект.");
+                Console.WriteLine("2. Отобразить объекты.");
                 Console.WriteLine("3. Использовать функции объекта.");
-                int input = ValidateInput(1, 3);
+                Console.WriteLine("4. Выход.");
+                int input = ValidateInput(1, 4);
                 switch (input)
                 {
                     case 1:
-                        UseMethods(m_type,true, true);
+                        UseMethods(currentType,true, true);
                         break;
                     case 2:
                         ListObjects();
                         break;
                     case 3:
-                        UseMethods(m_type,false, false);
+                        UseMethods(currentType,false, false);
                         break;
-                    
+                    case 4:
+                        return;
                 }
+            }
+        }
+        
+        public void Run()
+        {
+            MockObjects();
+            ShowTypes();
+            while (true)
+            {
+                SelectTypes();
             }
         }
 
@@ -72,10 +89,8 @@ namespace Practice1
             }
 
             ShowFunctions(functions);
-            int max = functions.Length + 1;
-            Console.WriteLine(" " + max + ". Выход");
+            int select = SelectOption(functions);
 
-            int select = ValidateInput(1, max);
             object newInstance = ExecuteFunction(functions[select - 1], IsCtor);
             if (AddInObjects)
                 m_objects.Add(newInstance);
@@ -94,6 +109,22 @@ namespace Practice1
                 var func = functions[i];
                 Console.WriteLine(" " + (i + 1) + ". " + MenuTool.BeautifyFunction(func.Name, func.GetParameters()));
             }
+        }
+        private void ShowTypes()
+        {
+            for (int i = 0; i < m_types.Length; i++)
+            {
+                var t = m_types[i];
+                Console.WriteLine(" " + (i + 1) + ". " + t.Name);
+            }
+        }
+
+        private int SelectOption(object[] arr)
+        {
+            int max = arr.Length + 1;
+            Console.WriteLine(" " + max + ". Выход");
+
+            return ValidateInput(1, max);
         }
 
         private void SelectObject()
