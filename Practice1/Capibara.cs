@@ -71,5 +71,11 @@ namespace Practice1
         {
             return new Capibara(0, SEXES[getRandomSex()], a.nickname + " " + b.nickname);
         }
+
+        public void hello(Capibara count)
+        {
+            Console.WriteLine(this);
+            Console.WriteLine("Hello "+count+" times");
+        }
     }
 }

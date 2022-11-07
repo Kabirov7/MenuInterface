@@ -37,13 +37,13 @@ namespace Practice1
                 switch (input)
                 {
                     case 1:
-                        UseMethods(true);
+                        UseMethods(m_type.GetType(),true, true);
                         break;
                     case 2:
                         ListObjects();
                         break;
                     case 3:
-                        UseMethods(false);
+                        UseMethods(m_type.GetType(),false, false);
                         break;
                     
                 }
@@ -59,12 +59,12 @@ namespace Practice1
             }
         }
 
-        private void UseMethods(bool IsCtor = false)
+        private Object UseMethods(Type type, bool IsCtor = false, bool AddInObjects=false)
         {
             MethodBase[] functions = new MethodBase[] { };
             if (IsCtor)
             {
-                functions = m_type.GetConstructors();
+                functions = type.GetConstructors();
             }
             else
             {
@@ -76,7 +76,15 @@ namespace Practice1
             Console.WriteLine(" " + max + ". " + "Exit");
 
             int select = ValidateInput(1, max);
-            ExecuteFunction(functions[select - 1], IsCtor);
+            object newInstance = ExecuteFunction(functions[select - 1], IsCtor);
+            if (AddInObjects)
+                m_objects.Add(newInstance);
+            return newInstance;
+        }
+        
+        private Object CreateObject(object[] values, ConstructorInfo ctor)
+        {
+            return ctor.Invoke(values);
         }
 
         private void ShowFunctions(MethodBase[] functions)
@@ -103,18 +111,17 @@ namespace Practice1
             return currentType.GetMethods();
         }
 
-        public void ExecuteFunction(MethodBase func, bool IsCtor=false)
+        public Object ExecuteFunction(MethodBase func, bool IsCtor=false)
         {
             object[] values = InputParameters(func.Name, func.GetParameters());
             if (IsCtor)
             {
-                object new_instance = ((ConstructorInfo) func).Invoke(values);
-                m_objects.Add(new_instance);
+                object new_instance = CreateObject(values, (ConstructorInfo) func); 
+                return new_instance;
             }
             else
             {
-                // execute function here
-                func.Invoke(m_objects[m_active], values);
+                return func.Invoke(m_objects[m_active], values);
             }
         }
 
@@ -126,11 +133,52 @@ namespace Practice1
             for (int i = 0; i < parameters.Length; i++)
             {
                 Console.WriteLine("Input "+ parameters[i].Name);
-                Object value = InputParam(parameters[i].ParameterType);
+                Object value; 
+                if (MenuTool.NativeTypes.Contains(parameters[i].ParameterType))
+                {
+                    value = InputParam(parameters[i].ParameterType);    
+                }
+                else
+                {
+                    value = InputCustom(parameters[i].ParameterType);
+                }
+
+                
                 objects[i] = value;
             }
 
             return objects;
+        }
+
+        private object InputCustom(Type t)
+        {
+            Console.WriteLine("1. Use new object.");
+            Console.WriteLine("2. Use previous object.");
+
+            int select = ValidateInput(1, 2);
+
+            object value = null;
+            switch (select)
+            {
+                case 1:
+                    value = UseMethods(t, true, false);
+                    break;
+                case 2:
+                    ListObjects();
+                    while (true)
+                    {
+                        int objectIdx = ValidateInput(1, m_objects.Count);
+                        if (m_objects[objectIdx].GetType() == t)
+                        {
+                            value = m_objects[objectIdx];
+                            break;
+                        }
+                    }
+
+                    break;
+            }
+
+            return value;
         }
 
         private int ValidateInput(int start, int end)
