@@ -30,9 +30,9 @@ namespace Practice1
             // TestMethods();
             while (true)
             {
-                Console.WriteLine("1. Create object.");
-                Console.WriteLine("2. List objects.");
-                Console.WriteLine("3. Use methods of some object.");
+                Console.WriteLine("1. Создать объект.");
+                Console.WriteLine("2. Отобразить объект.");
+                Console.WriteLine("3. Использовать функции объекта.");
                 int input = ValidateInput(1, 3);
                 switch (input)
                 {
@@ -73,7 +73,7 @@ namespace Practice1
 
             ShowFunctions(functions);
             int max = functions.Length + 1;
-            Console.WriteLine(" " + max + ". " + "Exit");
+            Console.WriteLine(" " + max + ". Выход");
 
             int select = ValidateInput(1, max);
             object newInstance = ExecuteFunction(functions[select - 1], IsCtor);
@@ -98,7 +98,7 @@ namespace Practice1
 
         private void SelectObject()
         {
-            Console.WriteLine("Please, select instance with what you want to work");
+            Console.WriteLine("Пожалуйста, выберите объект с которым хотите работать.");
             ListObjects();
             m_active = ValidateInput(1, m_objects.Count)-1;
         }
@@ -132,7 +132,7 @@ namespace Practice1
 
             for (int i = 0; i < parameters.Length; i++)
             {
-                Console.WriteLine("Input "+ parameters[i].Name);
+                Console.WriteLine("Введите "+ parameters[i].Name);
                 Object value; 
                 if (MenuTool.NativeTypes.Contains(parameters[i].ParameterType))
                 {
@@ -152,8 +152,8 @@ namespace Practice1
 
         private object InputCustom(Type t)
         {
-            Console.WriteLine("1. Use new object.");
-            Console.WriteLine("2. Use previous object.");
+            Console.WriteLine("1. Использовать новый объект.");
+            Console.WriteLine("2. Использовать предыдущие объекты.");
 
             int select = ValidateInput(1, 2);
 
@@ -190,7 +190,7 @@ namespace Practice1
                 {
                     return i;
                 } 
-                Console.WriteLine("You cannot call this command");
+                Console.WriteLine("Вы не можете вызвать эту команду");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Practice1
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Invalid input");
+                    Console.WriteLine("Некорректный ввод.");
                 }
             }
         }
