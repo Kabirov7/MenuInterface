@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+// TODO: add showing attributes for type
 namespace Practice1
 {
     public class Menu
@@ -193,13 +194,14 @@ namespace Practice1
         
         public object InputCustom(Type t)
         {
+            int select=1;
             if (t.BaseType != typeof(object[]).BaseType)
             {
                 Console.WriteLine("1. Использовать новый объект.");
                 Console.WriteLine("2. Использовать предыдущие объекты.");
+                 select = ValidateInput(1, 2);
             }
-
-            int select = ValidateInput(1, 2);
+            
             object value = null;
             switch (select)
             {
@@ -213,7 +215,7 @@ namespace Practice1
                     ListObjects();
                     while (true)
                     {
-                        int objectIdx = ValidateInput(1, m_objects.Count);
+                        int objectIdx = ValidateInput(1, m_objects.Count)-1;
                         if (m_objects[objectIdx].GetType() == t)
                         {
                             value = m_objects[objectIdx];
