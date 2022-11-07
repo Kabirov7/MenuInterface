@@ -37,13 +37,13 @@ namespace Practice1
                 switch (input)
                 {
                     case 1:
-                        UseMethods(m_type.GetType(),true, true);
+                        UseMethods(m_type,true, true);
                         break;
                     case 2:
                         ListObjects();
                         break;
                     case 3:
-                        UseMethods(m_type.GetType(),false, false);
+                        UseMethods(m_type,false, false);
                         break;
                     
                 }
@@ -61,7 +61,7 @@ namespace Practice1
 
         private Object UseMethods(Type type, bool IsCtor = false, bool AddInObjects=false)
         {
-            MethodBase[] functions = new MethodBase[] { };
+            var functions = new MethodBase[] { };
             if (IsCtor)
             {
                 functions = type.GetConstructors();
