@@ -60,7 +60,6 @@ namespace Practice1
         public void Run()
         {
             MockObjects();
-            ShowTypes();
             while (true)
             {
                 SelectTypes();
@@ -89,9 +88,10 @@ namespace Practice1
             }
 
             ShowFunctions(functions);
-            int select = SelectOption(functions);
+            int select = SelectOption(functions) - 1;
 
-            object newInstance = ExecuteFunction(functions[select - 1], IsCtor);
+            if (select > functions.Length - 1) return null;
+            object newInstance = ExecuteFunction(functions[select], IsCtor);
             if (AddInObjects)
                 m_objects.Add(newInstance);
             return newInstance;
@@ -164,35 +164,46 @@ namespace Practice1
             for (int i = 0; i < parameters.Length; i++)
             {
                 Console.WriteLine("Введите "+ parameters[i].Name);
-                Object value; 
-                if (MenuTool.NativeTypes.Contains(parameters[i].ParameterType))
-                {
-                    value = InputParam(parameters[i].ParameterType);    
-                }
-                else
-                {
-                    value = InputCustom(parameters[i].ParameterType);
-                }
 
-                
-                objects[i] = value;
+                objects[i] = InputObject(parameters[i].ParameterType);
             }
 
             return objects;
         }
 
-        private object InputCustom(Type t)
+        private object InputObject(Type parameterType)
         {
-            Console.WriteLine("1. Использовать новый объект.");
-            Console.WriteLine("2. Использовать предыдущие объекты.");
+            Object value; 
+            if (MenuTool.NativeTypes.Contains(parameterType))
+            {
+                value = InputParam(parameterType);    
+            }
+            else
+            {
+                value = InputCustom(parameterType);
+            }
 
-            int select = ValidateInput(1, 2);
+            return value;
+        }
+        
+        public object InputCustom(Type t)
+        {
+            if (t.BaseType != typeof(object[]).BaseType)
+            {
+                Console.WriteLine("1. Использовать новый объект.");
+                Console.WriteLine("2. Использовать предыдущие объекты.");
+            }
 
+            // int select = ValidateInput(1, 2);
+            int select = 1;
             object value = null;
             switch (select)
             {
                 case 1:
-                    value = UseMethods(t, true, false);
+                    if (t.BaseType == typeof(object[]).BaseType) 
+                        value = FillArray(t);
+                    else 
+                        value = UseMethods(t, true, false);
                     break;
                 case 2:
                     ListObjects();
@@ -223,6 +234,22 @@ namespace Practice1
                 } 
                 Console.WriteLine("Вы не можете вызвать эту команду");
             }
+        }
+
+        private object FillArray(Type arrType)
+        {
+            Type elType = arrType.GetElementType();
+
+            Console.WriteLine("Сколкьо значений хотите ввести?");
+            int count = (int)InputParam(typeof(int));
+            object[] objects = new object[count];
+            Console.WriteLine("Начинайте вводить ваши данные:");
+            for (int i = 0; i < count; i++)
+            {
+                objects[i] = InputObject(elType);
+            }
+            return objects;
+
         }
 
         private Object InputParam(Type t)

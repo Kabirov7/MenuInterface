@@ -23,7 +23,6 @@ namespace Practice1
             Type[] usingTypes = new[] {typeof(Capibara)};
             var menu = new Menu(usingTypes);
             menu.Run();
-
         }
     }
 }
