@@ -153,11 +153,8 @@ namespace Practice1
             }
             else
             {
-                object result = func.Invoke(m_objects[m_active], values);
-                if (result!=null)
-                {
-                    Console.WriteLine(result);
-                }
+                var result = (object) func.Invoke(m_objects[m_active], values);
+                Console.WriteLine(result);
                 return result;
             }
         }

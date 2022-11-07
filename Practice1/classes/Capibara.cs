@@ -75,7 +75,7 @@ namespace Practice1
             return Species + ": " + nickname + ", " + sex + ", " + age;
         }
 
-        public override void gnaw()
+        public override void Gnaw()
         {
             Console.WriteLine("Gnawing");
         }
