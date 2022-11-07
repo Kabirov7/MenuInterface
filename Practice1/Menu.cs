@@ -152,7 +152,12 @@ namespace Practice1
             }
             else
             {
-                return func.Invoke(m_objects[m_active], values);
+                object result = func.Invoke(m_objects[m_active], values);
+                if (result!=null)
+                {
+                    Console.WriteLine(result);
+                }
+                return result;
             }
         }
 
@@ -194,8 +199,7 @@ namespace Practice1
                 Console.WriteLine("2. Использовать предыдущие объекты.");
             }
 
-            // int select = ValidateInput(1, 2);
-            int select = 1;
+            int select = ValidateInput(1, 2);
             object value = null;
             switch (select)
             {
